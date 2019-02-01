@@ -27,4 +27,15 @@ class TodoListCest
         $I->todos->seeTodo('Fix Bugs');
         $I->todos->seeTodoCount(2);
     }
+        
+    public function iSeeTodoStatus(AcceptanceTester $I)
+    {
+        $todo_a = $I->db->todo->create(['user_id' => $I->user->id, 'done' => true]);
+        $todo_b = $I->db->todo->create(['user_id' => $I->user->id, 'done' => false]);
+        
+        $I->amLoggedIn();
+        
+        $I->todos->seeTodoStatusDone($todo_a->id);
+        $I->todos->seeTodoStatusNotDone($todo_b->id);
+    }
 }
