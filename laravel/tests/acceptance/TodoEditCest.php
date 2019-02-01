@@ -51,4 +51,16 @@ class TodoEditCest
         $I->todos->seeTodo('Bake cake and eat it');
         $I->todos->seeTodoStatusNotDone($todo->id);
     }
+        
+    public function iCantEditTodosThatAreNotMine(AcceptanceTester $I)
+    {
+        $someone_else = $I->db->user->create();
+        $todo = $I->db->todo->create(['user_id' => $someone_else->id]);
+        
+        $I->amLoggedIn();
+        $I->todo_edit->goToPage($todo->id);
+        
+        $I->see('403');
+        $I->see('Sorry, you are forbidden from accessing this page.');
+    }
 }

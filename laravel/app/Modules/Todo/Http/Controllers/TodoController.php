@@ -5,12 +5,16 @@ namespace App\Modules\Todo\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\Todo\Models\Todo;
+use App\Modules\Todo\Http\Middleware\VerifyTodoOwnership;
 
 class TodoController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(VerifyTodoOwnership::class)->except([
+            'index', 'create', 'createSubmit'
+        ]);
     }
 
     public function index(Request $request)
