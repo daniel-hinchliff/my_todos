@@ -25,7 +25,9 @@ class TodoController extends Controller
     
     public function create(Request $request)
     {             
-        return view('todo::edit');
+        $todo = new Todo();
+        
+        return view('todo::edit', compact('todo'));
     }
     
     public function createSubmit(Request $request)
@@ -36,6 +38,25 @@ class TodoController extends Controller
         $todo->description = $request->input('description');
         $todo->user_id = $request->user()->id;
         $todo->done = false;
+        $todo->save();
+        
+        return redirect('todo');
+    }
+    
+    public function edit(Request $request, $id)
+    {       
+        $todo = Todo::findOrFail($id);
+        
+        return view('todo::edit', compact('todo'));
+    }
+    
+    public function editSubmit(Request $request, $id)
+    {
+        $request->validate($this->rules());
+        
+        $todo = Todo::findOrFail($id);
+        $todo->description = $request->input('description');
+        $todo->done = $request->input('done', false);
         $todo->save();
         
         return redirect('todo');

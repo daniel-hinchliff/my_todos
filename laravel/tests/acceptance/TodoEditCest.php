@@ -13,4 +13,23 @@ class TodoEditCest
         $I->todos->seeTodo('Get a job');
         $I->todos->seeTodoCount(1);
     }
+            
+    public function iCanEditNotDoneTodos(AcceptanceTester $I)
+    {
+        $todo = $I->db->todo->create([
+            'user_id' => $I->user->id, 
+            'description' => 'Figure out the meaning of ...',
+            'done' => false,
+        ]);
+        
+        $I->amLoggedIn();
+                
+        $I->todos->clickEdit($todo->id);
+        $I->todo_edit->setDescription('Figure out the meaning of life');
+        $I->todo_edit->setDone(true);
+        $I->todo_edit->clickSubmit();
+        
+        $I->todos->seeTodo('Figure out the meaning of life');
+        $I->todos->seeTodoStatusDone($todo->id);
+    }
 }
