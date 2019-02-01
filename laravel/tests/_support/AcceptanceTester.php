@@ -2,6 +2,14 @@
 
 
 /**
+ * 
+ * @property Fixture\Database $db
+ * @property App\User $user
+ * 
+ * Page Drivers
+ * @property Page\Login $login 
+ * @property Page\TodoList $todos 
+ * 
  * Inherited Methods
  * @method void wantToTest($text)
  * @method void wantTo($text)
@@ -20,7 +28,22 @@ class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    public function __construct(\Codeception\Scenario $scenario) 
+    {
+        parent::__construct($scenario);
+        
+        $this->login = new Page\Login($this);
+        $this->todos = new Page\TodoList($this);
+        
+        $this->db = new Fixture\Database();
+        
+        $this->user = $this->db->user->create();
+    }
+    
+    public function amLoggedIn()
+    {
+        $password = $this->db->user->passwordForUser($this->user->name);
+        
+        $this->login->login($this->user->email, $password);
+    }
 }
