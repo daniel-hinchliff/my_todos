@@ -1,6 +1,6 @@
 <?php
 
-class TodoEditCest 
+class TodoEditCest extends AcceptanceTest
 {
     public function iCanCreateTodos(AcceptanceTester $I)
     {
@@ -14,9 +14,9 @@ class TodoEditCest
         $I->todos->seeTodoCount(1);
     }
             
-    public function iCanEditNotDoneTodos(AcceptanceTester $I)
+    public function iCanEditNotDoneTodos(AcceptanceTester $I, Database $db)
     {
-        $todo = $I->db->todo->create([
+        $todo = $db->todo->create([
             'user_id' => $I->user->id, 
             'description' => 'Figure out the meaning of ...',
             'done' => false,
@@ -32,9 +32,9 @@ class TodoEditCest
         $I->todos->seeTodoStatusDone($todo->id);
     }
         
-    public function iCanEditDoneTodos(AcceptanceTester $I)
+    public function iCanEditDoneTodos(AcceptanceTester $I, Database $db)
     {
-        $todo = $I->db->todo->create([
+        $todo = $db->todo->create([
             'user_id' => $I->user->id, 
             'description' => 'Bake cake',
             'done' => true,
@@ -50,10 +50,10 @@ class TodoEditCest
         $I->todos->seeTodoStatusNotDone($todo->id);
     }
         
-    public function iCantEditTodosThatAreNotMine(AcceptanceTester $I)
+    public function iCantEditTodosThatAreNotMine(AcceptanceTester $I, Database $db)
     {
-        $someone_else = $I->db->user->create();
-        $todo = $I->db->todo->create(['user_id' => $someone_else->id]);
+        $someone_else = $db->user->create();
+        $todo = $db->todo->create(['user_id' => $someone_else->id]);
         
         $I->amOnTodoList();
         $I->todo_edit->goToPage($todo->id);

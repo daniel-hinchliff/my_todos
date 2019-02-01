@@ -1,6 +1,6 @@
 <?php
 
-class WelcomeCest 
+class WelcomeCest extends AcceptanceTest
 {
     public function iSeeWelcomePage(AcceptanceTester $I)
     {

@@ -2,9 +2,9 @@
 
 
 /**
- * 
- * @property Fixture\Database $db
+ * Actor
  * @property App\User $user
+ * @property string $password
  * 
  * Page Drivers
  * @property Page\Login $login 
@@ -36,17 +36,17 @@ class AcceptanceTester extends \Codeception\Actor
         $this->login = new Page\Login($this);
         $this->todos = new Page\TodoList($this);
         $this->todo_edit = new Page\TodoEdit($this);
-        
-        $this->db = new Fixture\Database();
-        
-        $this->user = $this->db->user->create();
+    }
+    
+    public function setUser($user, $password)
+    {
+        $this->user = $user;
+        $this->password = $password;
     }
     
     public function amLoggedIn()
     {
-        $password = $this->db->user->passwordForUser($this->user->name);
-        
-        $this->login->login($this->user->email, $password);
+        $this->login->login($this->user->email, $this->password);
     }
     
     public function amOnTodoList()
