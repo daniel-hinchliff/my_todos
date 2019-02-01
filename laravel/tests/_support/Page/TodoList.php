@@ -7,6 +7,7 @@ class TodoList extends Page
     const TODO = "#todo-%d";
     const TODOS = '.todo';
     const DELETE_BUTTON = 'form button';
+    const CREATE_LINK = 'Create a new Todo';
     const STATUS_NOT_DONE_TEXT = 'Pending';
     const STATUS_DONE_TEXT = 'Done';
     const STATUS = '.status';
@@ -34,6 +35,11 @@ class TodoList extends Page
     public function clickDelete($id)
     {
         $this->tester->click($this->todoDeleteSelector($id));
+    }
+    
+    public function clickCreate()
+    {
+        $this->tester->click(self::CREATE_LINK);
     }
     
     protected function todoDeleteSelector($id)

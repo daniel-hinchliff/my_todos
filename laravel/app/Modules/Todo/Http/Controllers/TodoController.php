@@ -23,10 +23,35 @@ class TodoController extends Controller
         return view('todo::index', compact('todos'));
     }
     
+    public function create(Request $request)
+    {             
+        return view('todo::edit');
+    }
+    
+    public function createSubmit(Request $request)
+    {
+        $request->validate($this->rules());
+                
+        $todo = new Todo();
+        $todo->description = $request->input('description');
+        $todo->user_id = $request->user()->id;
+        $todo->done = false;
+        $todo->save();
+        
+        return redirect('todo');
+    }
+    
     public function delete(Request $request, $id)
     {
         Todo::findOrFail($id)->delete();
         
         return redirect('todo');
+    }
+    
+    protected function rules()
+    {
+        return [
+            'description' => 'required|max:30',
+        ];
     }
 }

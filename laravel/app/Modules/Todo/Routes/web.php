@@ -13,5 +13,7 @@
 
 Route::group(['prefix' => 'todo'], function () {
     Route::get('/', 'TodoController@index');
+    Route::get('/create', 'TodoController@create');
+    Route::post('/', 'TodoController@createSubmit')->name('todo_create');
     Route::post('/{id}/delete', 'TodoController@delete')->name('todo_delete');
 });

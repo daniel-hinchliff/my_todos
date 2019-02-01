@@ -9,6 +9,7 @@
  * Page Drivers
  * @property Page\Login $login 
  * @property Page\TodoList $todos 
+ * @property Page\TodoEdit $todo_edit 
  * 
  * Inherited Methods
  * @method void wantToTest($text)
@@ -34,6 +35,7 @@ class AcceptanceTester extends \Codeception\Actor
         
         $this->login = new Page\Login($this);
         $this->todos = new Page\TodoList($this);
+        $this->todo_edit = new Page\TodoEdit($this);
         
         $this->db = new Fixture\Database();
         
