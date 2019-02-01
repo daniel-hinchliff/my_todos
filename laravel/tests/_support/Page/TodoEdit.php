@@ -13,7 +13,11 @@ class TodoEdit extends Page
     
     public function setDone($bool)
     {
-        $this->tester->checkOption('done');
+        if ($bool) {
+            $this->tester->checkOption('done');
+        } else {
+            $this->tester->uncheckOption('done');
+        }
     }
     
     public function clickSubmit()

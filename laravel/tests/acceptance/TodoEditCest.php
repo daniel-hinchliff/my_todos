@@ -32,4 +32,23 @@ class TodoEditCest
         $I->todos->seeTodo('Figure out the meaning of life');
         $I->todos->seeTodoStatusDone($todo->id);
     }
+        
+    public function iCanEditDoneTodos(AcceptanceTester $I)
+    {
+        $todo = $I->db->todo->create([
+            'user_id' => $I->user->id, 
+            'description' => 'Bake cake',
+            'done' => true,
+        ]);
+        
+        $I->amLoggedIn();
+                
+        $I->todos->clickEdit($todo->id);
+        $I->todo_edit->setDescription('Bake cake and eat it');
+        $I->todo_edit->setDone(false);
+        $I->todo_edit->clickSubmit();
+        
+        $I->todos->seeTodo('Bake cake and eat it');
+        $I->todos->seeTodoStatusNotDone($todo->id);
+    }
 }
