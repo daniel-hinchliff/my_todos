@@ -56,4 +56,15 @@ class TodoListCest
         $I->todos->seeTodo('Do not delete me');
         $I->todos->seeTodoCount(1);
     }
+        
+    public function iCantSeeTodosThatAreNotMine(AcceptanceTester $I)
+    {
+        $someone_else = $I->db->user->create();
+        $I->db->todo->create(['user_id' => $someone_else->id]);
+        
+        $I->amLoggedIn();
+
+        $I->see('You have no Todos');
+        $I->todos->seeTodoCount(0);
+    }
 }
