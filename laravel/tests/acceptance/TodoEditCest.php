@@ -4,7 +4,7 @@ class TodoEditCest
 {
     public function iCanCreateTodos(AcceptanceTester $I)
     {
-        $I->amLoggedIn();
+        $I->amOnTodoList();
                 
         $I->todos->clickCreate();
         $I->todo_edit->setDescription('Get a job');
@@ -22,8 +22,7 @@ class TodoEditCest
             'done' => false,
         ]);
         
-        $I->amLoggedIn();
-                
+        $I->amOnTodoList();                
         $I->todos->clickEdit($todo->id);
         $I->todo_edit->setDescription('Figure out the meaning of life');
         $I->todo_edit->setDone(true);
@@ -41,8 +40,7 @@ class TodoEditCest
             'done' => true,
         ]);
         
-        $I->amLoggedIn();
-                
+        $I->amOnTodoList();                
         $I->todos->clickEdit($todo->id);
         $I->todo_edit->setDescription('Bake cake and eat it');
         $I->todo_edit->setDone(false);
@@ -57,7 +55,7 @@ class TodoEditCest
         $someone_else = $I->db->user->create();
         $todo = $I->db->todo->create(['user_id' => $someone_else->id]);
         
-        $I->amLoggedIn();
+        $I->amOnTodoList();
         $I->todo_edit->goToPage($todo->id);
         
         $I->see('403');

@@ -48,4 +48,9 @@ class AcceptanceTester extends \Codeception\Actor
         
         $this->login->login($this->user->email, $password);
     }
+    
+    public function amOnTodoList()
+    {
+        $this->amLoggedIn();
+    }
 }

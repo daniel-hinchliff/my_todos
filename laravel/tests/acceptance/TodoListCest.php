@@ -4,7 +4,7 @@ class TodoListCest
 {
     public function iSeeEmptyList(AcceptanceTester $I)
     {
-        $I->amLoggedIn();
+        $I->amOnTodoList();
         
         $I->see('You have no Todos');
         $I->todos->seeTodoCount(0);
@@ -21,7 +21,7 @@ class TodoListCest
             'description' => 'Fix Bugs',
         ]);
         
-        $I->amLoggedIn();
+        $I->amOnTodoList();
         
         $I->todos->seeTodo('Write Code');
         $I->todos->seeTodo('Fix Bugs');
@@ -33,7 +33,7 @@ class TodoListCest
         $todo_a = $I->db->todo->create(['user_id' => $I->user->id, 'done' => true]);
         $todo_b = $I->db->todo->create(['user_id' => $I->user->id, 'done' => false]);
         
-        $I->amLoggedIn();
+        $I->amOnTodoList();
         
         $I->todos->seeTodoStatusDone($todo_a->id);
         $I->todos->seeTodoStatusNotDone($todo_b->id);
@@ -50,7 +50,7 @@ class TodoListCest
             'description' => 'Do not delete me',
         ]);
         
-        $I->amLoggedIn();
+        $I->amOnTodoList();
         
         $I->todos->clickDelete($todo->id);
         $I->todos->seeTodo('Do not delete me');
@@ -62,7 +62,7 @@ class TodoListCest
         $someone_else = $I->db->user->create();
         $I->db->todo->create(['user_id' => $someone_else->id]);
         
-        $I->amLoggedIn();
+        $I->amOnTodoList();
 
         $I->see('You have no Todos');
         $I->todos->seeTodoCount(0);
