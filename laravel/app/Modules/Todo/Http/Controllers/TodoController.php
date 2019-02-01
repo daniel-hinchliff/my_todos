@@ -22,4 +22,11 @@ class TodoController extends Controller
         
         return view('todo::index', compact('todos'));
     }
+    
+    public function delete(Request $request, $id)
+    {
+        Todo::findOrFail($id)->delete();
+        
+        return redirect('todo');
+    }
 }

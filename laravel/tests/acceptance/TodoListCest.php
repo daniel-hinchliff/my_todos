@@ -38,4 +38,22 @@ class TodoListCest
         $I->todos->seeTodoStatusDone($todo_a->id);
         $I->todos->seeTodoStatusNotDone($todo_b->id);
     }
+    
+    public function iCanDeleteATodo(AcceptanceTester $I)
+    {
+        $todo = $I->db->todo->create([
+            'user_id' => $I->user->id, 
+            'description' => 'Delete me',
+        ]);
+        $I->db->todo->create([
+            'user_id' => $I->user->id, 
+            'description' => 'Do not delete me',
+        ]);
+        
+        $I->amLoggedIn();
+        
+        $I->todos->clickDelete($todo->id);
+        $I->todos->seeTodo('Do not delete me');
+        $I->todos->seeTodoCount(1);
+    }
 }

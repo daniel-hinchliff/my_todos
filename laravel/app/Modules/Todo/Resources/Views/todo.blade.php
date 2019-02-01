@@ -4,4 +4,5 @@
         
         <small class='status'>{{ $todo->done ? 'Done' : 'Pending' }}</small>
     </p>
+    @include('todo::actions')
 </div>

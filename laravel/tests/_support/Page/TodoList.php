@@ -6,6 +6,7 @@ class TodoList extends Page
 {
     const TODO = "#todo-%d";
     const TODOS = '.todo';
+    const DELETE_BUTTON = 'form button';
     const STATUS_NOT_DONE_TEXT = 'Pending';
     const STATUS_DONE_TEXT = 'Done';
     const STATUS = '.status';
@@ -29,7 +30,17 @@ class TodoList extends Page
     {
         $this->waitForText(self::STATUS_NOT_DONE_TEXT, $this->todoStatusSelector($id));
     }
-        
+    
+    public function clickDelete($id)
+    {
+        $this->tester->click($this->todoDeleteSelector($id));
+    }
+    
+    protected function todoDeleteSelector($id)
+    {
+        return $this->todoSelector($id) . " " . self::DELETE_BUTTON;
+    }
+    
     protected function todoStatusSelector($id)
     {
         return $this->todoSelector($id) . " " . self::STATUS;
