@@ -23,3 +23,8 @@ If you are connected to VNC and have your popcorn ready, run the following comma
 sh run_tests.sh
 ```
 
+To stop the application run:
+
+```bash
+sh stop.sh
+```
