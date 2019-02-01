@@ -7,9 +7,15 @@
             <div class="card">
                 <div class="card-header">Todos</div>
                 <div class="card-body">                  
-                    <p>
-                        <br> You have no Todos.
-                    </p>
+                    @if (!$todos->count())
+                        <p>
+                            <br> You have no Todos.
+                        </p>
+                    @else
+                        @foreach ($todos as $todo)
+                            @include('todo::todo')
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

@@ -10,4 +10,9 @@ class TodoList extends Page
     {
         $this->tester->seeNumberOfElements(self::TODOS, $count);
     }
+    
+    public function seeTodo($description)
+    {
+        $this->tester->waitForText($description);
+    }
 }
